@@ -350,3 +350,28 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+/* Base role label styling with pill effect */
+.role_label {
+    -fx-text-fill: white;
+    -fx-padding: 2 8 2 8;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-font-size: 11;
+    -fx-font-weight: bold;
+}
+
+/* Student role - Blue */
+.role_label.role-student {
+    -fx-background-color: #4A90E2;
+}
+
+/* Tutor role - Green */
+.role_label.role-tutor {
+    -fx-background-color: #50C878;
+}
+
+/* Parent role - Purple */
+.role_label.role-parent {
+    -fx-background-color: #9B59B6;
+}

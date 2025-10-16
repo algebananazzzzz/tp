@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.AddClassCommand;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AttendCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteClassCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -22,9 +23,12 @@ import seedu.address.logic.commands.EditClassCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.JoinClassCommand;
+import seedu.address.logic.commands.ListChildrenCommand;
+import seedu.address.logic.commands.ListClassCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -114,6 +118,32 @@ public class AddressBookParserTest {
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_listChildren() throws Exception {
+        assertTrue(parser.parseCommand(ListChildrenCommand.COMMAND_WORD) instanceof ListChildrenCommand);
+        ListChildrenCommand command = (ListChildrenCommand) parser.parseCommand(
+                ListChildrenCommand.COMMAND_WORD + " n/John Doe");
+        assertEquals(new ListChildrenCommand("John Doe"), command);
+    }
+
+    @Test
+    public void parseCommand_listClass() throws Exception {
+        assertTrue(parser.parseCommand(ListClassCommand.COMMAND_WORD) instanceof ListClassCommand);
+        assertTrue(parser.parseCommand(ListClassCommand.COMMAND_WORD + " 3") instanceof ListClassCommand);
+    }
+
+    @Test
+    public void parseCommand_filter() throws Exception {
+        assertTrue(parser.parseCommand(FilterCommand.COMMAND_WORD + " ro/parent") instanceof FilterCommand);
+        assertTrue(parser.parseCommand(FilterCommand.COMMAND_WORD + " ro/student") instanceof FilterCommand);
+    }
+
+    @Test
+    public void parseCommand_attend() throws Exception {
+        String commandString = AttendCommand.COMMAND_WORD + " n/Alice session/1 status/PRESENT";
+        assertTrue(parser.parseCommand(commandString) instanceof AttendCommand);
     }
 
     @Test

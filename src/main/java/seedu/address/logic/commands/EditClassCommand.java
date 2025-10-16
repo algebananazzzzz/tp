@@ -3,10 +3,14 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CLASSES;
 
+import java.util.ArrayList;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.classroom.ClassName;
 import seedu.address.model.classroom.TuitionClass;
+import seedu.address.model.person.Student;
+import seedu.address.model.person.Tutor;
 
 /**
  * Edits the name of an existing class in TutBook.
@@ -46,15 +50,30 @@ public class EditClassCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        TuitionClass oldClass = new TuitionClass(new ClassName(oldClassName));
-        TuitionClass newClass = new TuitionClass(new ClassName(newClassName));
+        TuitionClass oldClass = model.getFilteredClassList().stream()
+                .filter(c -> c.getName().value.equals(oldClassName))
+                .findFirst()
+                .orElse(null);
 
-        if (!model.hasClass(oldClass)) {
+        if (oldClass == null) {
             throw new CommandException(String.format(MESSAGE_CLASS_NOT_FOUND, oldClassName));
         }
 
+        TuitionClass newClass = new TuitionClass(new ClassName(newClassName));
+
         if (!oldClass.isSameClass(newClass) && model.hasClass(newClass)) {
             throw new CommandException(String.format(MESSAGE_DUPLICATE_CLASS, newClassName));
+        }
+
+        for (Student student : new ArrayList<>(oldClass.getStudents())) {
+            student.removeClass(oldClass);
+            newClass.addStudent(student);
+        }
+
+        if (oldClass.isAssignedToTutor()) {
+            Tutor tutor = oldClass.getTutor();
+            tutor.removeClass(oldClass);
+            newClass.setTutor(tutor);
         }
 
         model.setClass(oldClass, newClass);

@@ -47,7 +47,31 @@ public class SampleDataUtil {
                                 new Phone("92624417"),
                                 new Email("royb@example.com"),
                                 new Address("Blk 45 Aljunied Street 85, #11-31"),
-                                getTagSet("colleagues"), PersonType.PARENT) };
+                                getTagSet("colleagues"), PersonType.PARENT),
+                Person.newPerson(new Name("Emma Yeoh"), new Phone("81234567"),
+                                new Email("emmayeoh@example.com"),
+                                new Address("Blk 30 Geylang Street 29, #06-40"),
+                                getTagSet("student"), PersonType.STUDENT),
+                Person.newPerson(new Name("Ethan Yeoh"), new Phone("82345678"),
+                                new Email("ethanyeoh@example.com"),
+                                new Address("Blk 30 Geylang Street 29, #06-40"),
+                                getTagSet("student"), PersonType.STUDENT),
+                Person.newPerson(new Name("Olivia Oliveiro"), new Phone("83456789"),
+                                new Email("olivia@example.com"),
+                                new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
+                                getTagSet("student"), PersonType.STUDENT),
+                Person.newPerson(new Name("Liam Li"), new Phone("84567890"),
+                                new Email("liaml@example.com"),
+                                new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
+                                getTagSet("student"), PersonType.STUDENT),
+                Person.newPerson(new Name("Sophia Ibrahim"), new Phone("85678901"),
+                                new Email("sophiai@example.com"),
+                                new Address("Blk 47 Tampines Street 20, #17-35"),
+                                getTagSet("student"), PersonType.STUDENT),
+                Person.newPerson(new Name("Aarav Balakrishnan"), new Phone("86789012"),
+                                new Email("aaravb@example.com"),
+                                new Address("Blk 45 Aljunied Street 85, #11-31"),
+                                getTagSet("student"), PersonType.STUDENT) };
     }
 
     public static ReadOnlyAddressBook getSampleAddressBook() {

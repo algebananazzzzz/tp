@@ -35,7 +35,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Constructs an empty {@code AddressBook}.
      */
-    public AddressBook() {}
+    public AddressBook() {
+    }
 
     /**
      * Creates an {@code AddressBook} using the data in {@code toBeCopied}.

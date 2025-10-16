@@ -7,6 +7,8 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.classroom.TuitionClass;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Student;
+import seedu.address.model.person.Tutor;
 
 /**
  * The API of the Model component.
@@ -55,11 +57,14 @@ public interface Model {
     ReadOnlyAddressBook getAddressBook();
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a person with the same identity as {@code person} exists in
+     * the address book.
      */
     boolean hasPerson(Person person);
+
     /**
-     * Returns true if a tuitionClass with the same identity as {@code tuitionClass} exists in the address book.
+     * Returns true if a tuitionClass with the same identity as {@code tuitionClass}
+     * exists in the address book.
      */
     boolean hasClass(TuitionClass tuitionClass);
 
@@ -90,14 +95,30 @@ public interface Model {
     /**
      * Replaces the given tuition class {@code target} with {@code editedClass}.
      * {@code target} must exist in the address book.
-     * The class identity of {@code editedClass} must not be the same as another existing class in the address book.
+     * The class identity of {@code editedClass} must not be the same as another
+     * existing class in the address book.
      */
     void setClass(TuitionClass target, TuitionClass editedClass);
 
     /**
+     * Adds the given person to the specified class.
+     * {@code student} must already exist in the address book.
+     * {@code toJoin} must already exist in the address book.
+     */
+    void addStudentToClass(Student student, TuitionClass toJoin);
+
+    /**
+     * Adsigns the given tutor to the specified class.
+     * {@code tutor} must already exist in the address book.
+     * {@code toJoin} must already exist in the address book.
+     */
+    void assignTutorToClass(Tutor tutor, TuitionClass toJoin);
+
+    /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * The person identity of {@code editedPerson} must not be the same as another
+     * existing person in the address book.
      */
     void setPerson(Person target, Person editedPerson);
 
@@ -108,13 +129,17 @@ public interface Model {
     ObservableList<TuitionClass> getFilteredClassList();
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * Updates the filter of the filtered person list to filter by the given
+     * {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     /**
-     * Updates the filter of the filtered class list to filter by the given {@code class}.
+     * Updates the filter of the filtered class list to filter by the given
+     * {@code class}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredClassList(Predicate<TuitionClass> predicate);

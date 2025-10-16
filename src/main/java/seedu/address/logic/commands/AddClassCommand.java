@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CLASS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTOR;
 
 import java.util.List;
 
@@ -20,17 +22,15 @@ public class AddClassCommand extends Command {
     public static final String COMMAND_WORD = "addclass";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a class to TutBook.\n"
-            + "Parameters: cn/CLASS_NAME [tutor/TUTOR_NAME]\n"
+            + "Parameters: " + PREFIX_CLASS + "CLASS_NAME [" + PREFIX_TUTOR + "TUTOR_NAME]\n"
             + "Examples:\n"
-            + "  " + COMMAND_WORD + " cn/Sec2-Math-A\n"
-            + "  " + COMMAND_WORD + " cn/Sec2-Math-A tutor/Ms Lim";
+            + "  " + COMMAND_WORD + " " + PREFIX_CLASS + "Sec2-Math-A\n"
+            + "  " + COMMAND_WORD + " " + PREFIX_CLASS + "Sec2-Math-A " + PREFIX_TUTOR + "Ms Lim";
 
     public static final String MESSAGE_SUCCESS = "New class added: %1$s";
     public static final String MESSAGE_DUPLICATE_CLASS = "This class already exists.";
-    public static final String MESSAGE_TUTOR_NOT_FOUND =
-            "Tutor not found: %1$s. Please ensure the tutor exists.";
-    public static final String MESSAGE_TUTOR_AMBIGUOUS =
-            "Multiple tutors named \"%1$s\" found. Please disambiguate.";
+    public static final String MESSAGE_TUTOR_NOT_FOUND = "Tutor not found: %1$s. Please ensure the tutor exists.";
+    public static final String MESSAGE_TUTOR_AMBIGUOUS = "Multiple tutors named \"%1$s\" found. Please disambiguate.";
 
     private final String classNameRaw;
     private final String tutorNameRaw; // optional
@@ -105,6 +105,6 @@ public class AddClassCommand extends Command {
         AddClassCommand o = (AddClassCommand) other;
         return classNameRaw.equals(o.classNameRaw)
                 && ((tutorNameRaw == null && o.tutorNameRaw == null)
-                    || (tutorNameRaw != null && tutorNameRaw.equals(o.tutorNameRaw)));
+                        || (tutorNameRaw != null && tutorNameRaw.equals(o.tutorNameRaw)));
     }
 }

@@ -2,7 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CLASS_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CLASS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTOR;
 
 import java.util.stream.Stream;
@@ -25,13 +25,13 @@ public class AddClassCommandParser implements Parser<AddClassCommand> {
             trimmed = trimmed.substring(cmd.length()).trim();
         }
 
-        ArgumentMultimap map = ArgumentTokenizer.tokenize(" " + trimmed, PREFIX_CLASS_NAME, PREFIX_TUTOR);
+        ArgumentMultimap map = ArgumentTokenizer.tokenize(" " + trimmed, PREFIX_CLASS, PREFIX_TUTOR);
 
-        if (!arePrefixesPresent(map, PREFIX_CLASS_NAME) || !map.getPreamble().isEmpty()) {
+        if (!arePrefixesPresent(map, PREFIX_CLASS) || !map.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddClassCommand.MESSAGE_USAGE));
         }
 
-        String className = ParserUtil.parseClassName(map.getValue(PREFIX_CLASS_NAME).get());
+        String className = ParserUtil.parseClassName(map.getValue(PREFIX_CLASS).get());
 
         if (className.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddClassCommand.MESSAGE_USAGE));

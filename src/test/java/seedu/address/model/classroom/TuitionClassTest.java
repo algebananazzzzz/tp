@@ -39,8 +39,7 @@ public class TuitionClassTest {
                 new Phone("91234567"),
                 new Email("smith@example.com"),
                 new Address("1 Tutor Lane"),
-                emptyTags
-        );
+                emptyTags);
 
         tuitionClass = new TuitionClass(new ClassName("CS2103T T12"), tutor);
 
@@ -49,16 +48,14 @@ public class TuitionClassTest {
                 new Phone("98765432"),
                 new Email("alice@example.com"),
                 new Address("10 Kent Ridge Road"),
-                emptyTags
-        );
+                emptyTags);
 
         bob = new Student(
                 new Name("Bob Lim"),
                 new Phone("92345678"),
                 new Email("bob@example.com"),
                 new Address("20 Clementi Ave"),
-                emptyTags
-        );
+                emptyTags);
     }
 
     @Test
@@ -119,6 +116,27 @@ public class TuitionClassTest {
         assertTrue(tuitionClass.getPastSessions().contains(pastSession));
         assertFalse(tuitionClass.getPastSessions().contains(futureSession1));
         assertFalse(tuitionClass.getPastSessions().contains(futureSession2));
+    }
+
+    @Test
+    @DisplayName("hasStudent returns true only for enrolled students")
+    void hasStudentBehavior() {
+        // initially not enrolled
+        assertFalse(tuitionClass.hasStudent(alice));
+
+        tuitionClass.addStudent(alice);
+        assertTrue(tuitionClass.hasStudent(alice));
+    }
+
+    @Test
+    @DisplayName("hasTutor returns true when tutor is assigned and false otherwise")
+    void hasTutorBehavior() {
+        // tutor assigned in setUp
+        assertTrue(tuitionClass.hasTutor(tutor));
+
+        Tutor other = new Tutor(new Name("Other Tutor"), new Phone("90000000"), new Email("o@example.com"),
+                new Address("Somewhere"), new HashSet<>());
+        assertFalse(tuitionClass.hasTutor(other));
     }
 
     @Test

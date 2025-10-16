@@ -145,6 +145,14 @@ public class TuitionClass {
         this.tutor = null;
     }
 
+    /**
+     * Checks if a tutor is assigned to this class.
+     */
+    public boolean hasTutor(Tutor tutor) {
+        requireNonNull(tutor);
+        return this.tutor != null && this.tutor.equals(tutor);
+    }
+
     // ---------------------------------------------------------------------
     // Roster
     // ---------------------------------------------------------------------
@@ -164,6 +172,14 @@ public class TuitionClass {
             students.add(student);
             student.addClass(this);
         }
+    }
+
+    /**
+     * Checks if a student is already in the class roster.
+     */
+    public boolean hasStudent(Student student) {
+        requireNonNull(student);
+        return students.contains(student);
     }
 
     /**

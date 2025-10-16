@@ -11,11 +11,20 @@ import static seedu.address.testutil.TypicalPersons.BENSON;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashSet;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.classroom.ClassName;
+import seedu.address.model.classroom.TuitionClass;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Student;
+import seedu.address.model.person.Tutor;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -128,5 +137,46 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
         assertFalse(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+
+        // different filteredClasses -> returns false
+        ModelManager modelManagerWithClass = new ModelManager(addressBook, userPrefs);
+        TuitionClass testClass = new TuitionClass(new ClassName("TestClass"));
+        modelManagerWithClass.addClass(testClass);
+        modelManagerWithClass.updateFilteredClassList(c -> c.getName().value.equals("TestClass"));
+        assertFalse(modelManager.equals(modelManagerWithClass));
+    }
+
+    @Test
+    public void addStudentToClass_validStudentAndClass_success() {
+        Student student = new Student(
+                new Name("Alice Tan"),
+                new Phone("98765432"),
+                new Email("alice@example.com"),
+                new Address("10 Kent Ridge Road"),
+                new HashSet<>());
+        TuitionClass tuitionClass = new TuitionClass(new ClassName("CS2103T"));
+
+        modelManager.addPerson(student);
+        modelManager.addClass(tuitionClass);
+        modelManager.addStudentToClass(student, tuitionClass);
+
+        assertTrue(tuitionClass.hasStudent(student));
+    }
+
+    @Test
+    public void assignTutorToClass_validTutorAndClass_success() {
+        Tutor tutor = new Tutor(
+                new Name("Mr Smith"),
+                new Phone("91234567"),
+                new Email("smith@example.com"),
+                new Address("1 Tutor Lane"),
+                new HashSet<>());
+        TuitionClass tuitionClass = new TuitionClass(new ClassName("CS2103T"));
+
+        modelManager.addPerson(tutor);
+        modelManager.addClass(tuitionClass);
+        modelManager.assignTutorToClass(tutor, tuitionClass);
+
+        assertTrue(tuitionClass.hasTutor(tutor));
     }
 }

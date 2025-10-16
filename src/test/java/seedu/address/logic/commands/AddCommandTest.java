@@ -24,6 +24,8 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.classroom.TuitionClass;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Student;
+import seedu.address.model.person.Tutor;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -41,7 +43,7 @@ public class AddCommandTest {
         CommandResult commandResult = new AddCommand(validPerson).execute(modelStub);
 
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
-                        commandResult.getFeedbackToUser());
+                commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
     }
 
@@ -176,6 +178,16 @@ public class AddCommandTest {
 
         @Override
         public void setClass(TuitionClass target, TuitionClass editedClass) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addStudentToClass(Student student, TuitionClass tuitionClass) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void assignTutorToClass(Tutor tutor, TuitionClass tuitionClass) {
             throw new AssertionError("This method should not be called.");
         }
 

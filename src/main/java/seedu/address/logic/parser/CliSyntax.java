@@ -18,5 +18,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_TUTOR = new Prefix("tutor/");
     public static final Prefix PREFIX_OLD_CLASS = new Prefix("o/");
     public static final Prefix PREFIX_CLASS = new Prefix("c/");
+    public static final Prefix PREFIX_PARENT = new Prefix("parent/");
+    public static final Prefix PREFIX_STUDENT = new Prefix("student/");
+
 
 }

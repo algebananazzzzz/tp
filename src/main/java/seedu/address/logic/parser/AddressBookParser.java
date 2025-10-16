@@ -71,6 +71,9 @@ public class AddressBookParser {
         case EditClassCommand.COMMAND_WORD:
             return new EditClassCommandParser().parse(arguments);
 
+        case JoinClassCommand.COMMAND_WORD:
+            return new JoinClassCommandParser().parse(arguments);
+
         case DeleteClassCommand.COMMAND_WORD:
             return new DeleteClassCommandParser().parse(arguments);
 

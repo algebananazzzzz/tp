@@ -20,7 +20,7 @@ public class AddClassCommandParserTest {
     @Test
     public void parse_validArgsMinimal_returnsAddClassCommand() throws Exception {
         System.out.println("Testing minimal case...");
-        AddClassCommand result = parser.parse("cn/Sec1-Math-A");
+        AddClassCommand result = parser.parse("c/Sec1-Math-A");
         System.out.println("Parsed successfully: " + result);
 
         AddClassCommand expected = new AddClassCommand("Sec1-Math-A");
@@ -34,7 +34,7 @@ public class AddClassCommandParserTest {
     public void parse_validArgsWithTutor_returnsAddClassCommand() throws Exception {
         AddClassCommand expected = new AddClassCommand("Sec1-Math-A", "Ms Lee");
         try {
-            AddClassCommand result = parser.parse("cn/Sec1-Math-A tutor/Ms Lee");
+            AddClassCommand result = parser.parse("c/Sec1-Math-A tutor/Ms Lee");
             assertEquals(expected, result);
         } catch (ParseException e) {
             System.out.println("ParseException message: " + e.getMessage());
@@ -44,7 +44,7 @@ public class AddClassCommandParserTest {
 
     @Test
     public void parse_invalidPreamble_throwsParseException() {
-        // class name without cn/ is preamble -> invalid in strict mode
+        // class name without c/ is preamble -> invalid in strict mode
         assertThrows(ParseException.class, () -> parser.parse("Sec1-Math-A"));
         assertThrows(ParseException.class, () -> parser.parse("   Sec1-Math-A   "));
     }
@@ -52,7 +52,7 @@ public class AddClassCommandParserTest {
     @Test
     public void parse_invalidLegacyTutorPrefix_throwsParseException() {
         // t/ is not accepted; only tutor/
-        assertThrows(ParseException.class, () -> parser.parse("cn/Sec1-Math-A t/Ms Lee"));
+        assertThrows(ParseException.class, () -> parser.parse("c/Sec1-Math-A t/Ms Lee"));
     }
 
     @Test
@@ -62,18 +62,18 @@ public class AddClassCommandParserTest {
 
     @Test
     public void parse_emptyClassNameValue_throwsParseException() {
-        assertThrows(ParseException.class, () -> parser.parse("cn/   tutor/Ms Lee"));
+        assertThrows(ParseException.class, () -> parser.parse("c/   tutor/Ms Lee"));
     }
 
     @Test
     public void parse_emptyTutorNameValue_throwsParseException() {
-        assertThrows(ParseException.class, () -> parser.parse("cn/Math101 tutor/   "));
+        assertThrows(ParseException.class, () -> parser.parse("c/Math101 tutor/   "));
     }
 
     @Test
     public void parse_validArgsWithExtraWhitespace_returnsAddClassCommand() throws Exception {
         AddClassCommand expected = new AddClassCommand("Math101", "Ms Lee");
-        AddClassCommand result = parser.parse("  cn/Math101   tutor/Ms Lee  ");
+        AddClassCommand result = parser.parse("  c/Math101   tutor/Ms Lee  ");
         assertEquals(expected, result);
     }
 }

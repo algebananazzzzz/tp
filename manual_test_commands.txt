@@ -1,5 +1,6 @@
 # Manual Test Script for EditClass and DeleteClass Commands
 # Run these commands in the application to verify functionality
+# Expected: All tests should pass with appropriate success/error messages
 
 # 1. First, add some test classes
 addclass Math101

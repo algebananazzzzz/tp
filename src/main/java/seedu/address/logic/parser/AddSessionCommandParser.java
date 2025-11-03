@@ -16,7 +16,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new AddSessionCommand object
  */
 public class AddSessionCommandParser implements Parser<AddSessionCommand> {
-
     /**
      * Parses the given {@code String} of arguments in the context of the AddSessionCommand
      * and returns an AddSessionCommand object for execution.
@@ -30,6 +29,7 @@ public class AddSessionCommandParser implements Parser<AddSessionCommand> {
 
         if (!arePrefixesPresent(argMultimap, PREFIX_CLASS, PREFIX_SESSION, PREFIX_DATETIME)
                 || !argMultimap.getPreamble().isEmpty()) {
+            System.out.println("bad");
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddSessionCommand.MESSAGE_USAGE));
         }

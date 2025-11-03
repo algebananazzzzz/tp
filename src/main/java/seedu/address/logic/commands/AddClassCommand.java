@@ -58,7 +58,12 @@ public class AddClassCommand extends Command {
         LOGGER.info("Executing AddClassCommand for class: " + classNameRaw
                 + (tutorNameRaw != null ? " with tutor: " + tutorNameRaw : ""));
 
-        ClassName className = new ClassName(classNameRaw);
+        ClassName className;
+        try {
+            className = new ClassName(classNameRaw);
+        } catch (IllegalArgumentException e) {
+            throw new CommandException(e.getMessage());
+        }
 
         Tutor tutor = null;
         if (tutorNameRaw != null && !tutorNameRaw.isEmpty()) {

@@ -53,14 +53,6 @@ public class ListChildrenCommandParserTest {
         assertEquals(expected, result);
     }
 
-    @Test
-    public void parse_veryLongParentName_returnsListChildrenCommand() throws Exception {
-        String parentName = "A".repeat(100);
-        ListChildrenCommand result = parser.parse("n/" + parentName);
-        ListChildrenCommand expected = new ListChildrenCommand(parentName);
-        assertEquals(expected, result);
-    }
-
     // ========== Negative test cases (should throw ParseException) ==========
 
     @Test

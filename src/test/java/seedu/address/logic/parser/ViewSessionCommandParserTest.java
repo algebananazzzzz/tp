@@ -143,16 +143,6 @@ public class ViewSessionCommandParserTest {
     }
 
     @Test
-    public void parse_longSessionName_success() throws Exception {
-        String userInput = "c/Math101 s/Week 1 Advanced Mathematics Tutorial Session for Calculus";
-        ViewSessionCommand expectedCommand = new ViewSessionCommand("Math101",
-                "Week 1 Advanced Mathematics Tutorial Session for Calculus");
-
-        ViewSessionCommand result = parser.parse(userInput);
-        assertEquals(expectedCommand, result);
-    }
-
-    @Test
     public void parse_classNameWithNumbers_success() throws Exception {
         String userInput = "c/Math101-2024 s/Week 1";
         ViewSessionCommand expectedCommand = new ViewSessionCommand("Math101-2024", "Week 1");

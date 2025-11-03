@@ -518,7 +518,7 @@ Action | Format, Examples
 **List** | `list`
 **List Class** | `listclass`
 **List Parents** | `listparents [n/CHILD_NAME]` <br> e.g., `listparents n/Damian`
-**List Session** | `listsession c/CLASS_NAME` <br> e.g., `listsession c/Math101`
+**List Session** | `listsessions c/CLASS_NAME` <br> e.g., `listsessions c/Math101`
 **Remove From** | `unjoin n/NAME c/CLASS` <br> e.g., `unjoin n/Damian c/Sec4 Math`
 **View Session** | `viewsession c/CLASS_NAME s/SESSION_NAME` <br> e.g., `viewsession c/Math101 s/Week 3 Tutorial`
 

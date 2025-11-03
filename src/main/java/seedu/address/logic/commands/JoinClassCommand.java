@@ -68,10 +68,10 @@ public class JoinClassCommand extends Command {
         requireNonNull(model);
         LOGGER.info("Executing JoinClassCommand for person: " + personName + " to class: " + className);
 
-        // Find the person by name
+        // Find the person by name (case-insensitive)
         List<Person> personList = model.getPersonList();
         Person toJoin = personList.stream()
-                .filter(p -> p.getName().fullName.equals(personName))
+                .filter(p -> p.getName().fullName.equalsIgnoreCase(personName))
                 .findFirst()
                 .orElse(null);
 

@@ -470,6 +470,20 @@
     -fx-font-size: 11;
 }
 
+.tags-flow {
+    -fx-hgap: 5;
+    -fx-vgap: 3;
+}
+
+.tags-flow .tag {
+    -fx-text-fill: white;
+    -fx-background-color: #3e7b91;
+    -fx-padding: 2 6 2 6;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+    -fx-font-size: 11;
+}
+
 /* Clean role label styling with proper spacing */
 .role_label {
     -fx-text-fill: white;

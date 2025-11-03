@@ -35,7 +35,7 @@ It covers how to install TutBook, perform common tasks, and troubleshoot issues.
 Follow these steps to set up TutBook on your computer.
 
 1. **Install Java 17 or above.**
- Download it [here](https://www.java.com/en/download/help/download_options.html).
+ Download it [here](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html).
  **Mac users:** Follow [this guide](https://se-education.org/guides/tutorials/javaInstallationMac.html) for the correct JDK setup.
 
 2. **Download TutBook.**
@@ -48,7 +48,7 @@ Follow these steps to set up TutBook on your computer.
  Open a command terminal, `cd` into the folder, and run:
 
  ```
- java -jar tutbook.jar
+ java -jar tutbook-v1.5.jar
  ```
 
  A window like the one below should appear:
@@ -518,7 +518,7 @@ Action | Format, Examples
 **List** | `list`
 **List Class** | `listclass`
 **List Parents** | `listparents [n/CHILD_NAME]` <br> e.g., `listparents n/Damian`
-**List Session** | `listsessions c/CLASS_NAME` <br> e.g., `listsessions c/Math101`
+**List Sessions** | `listsessions c/CLASS_NAME` <br> e.g., `listsessions c/Math101`
 **Remove From** | `unjoin n/NAME c/CLASS` <br> e.g., `unjoin n/Damian c/Sec4 Math`
 **View Session** | `viewsession c/CLASS_NAME s/SESSION_NAME` <br> e.g., `viewsession c/Math101 s/Week 3 Tutorial`
 

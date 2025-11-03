@@ -137,7 +137,9 @@ public abstract class Person {
             return true;
         }
 
-        return otherPerson != null && otherPerson.getName().equals(getName());
+        return otherPerson != null
+                && otherPerson.getName().equals(getName())
+                && otherPerson.getPersonType().equals(getPersonType());
     }
     // Abstract method for deletion
     public abstract void delete();

@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
@@ -47,6 +48,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label enrolledClasses;
     @FXML
+    private FlowPane tags;
+    @FXML
     private ImageView roleIcon;
 
     /**
@@ -63,8 +66,16 @@ public class PersonCard extends UiPart<Region> {
 
         // Display the person's role (type) as a chip with role-specific styling
         String roleType = person.getPersonType().toString();
-        role.setText(roleType);
+        String capitalizedRole = roleType.substring(0, 1).toUpperCase() + roleType.substring(1).toLowerCase();
+        role.setText(capitalizedRole);
         role.getStyleClass().add("role-" + roleType.toLowerCase());
+
+        // Display tags
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.getStyleClass().add("tag");
+            tags.getChildren().add(tagLabel);
+        });
 
         // Display enrolled classes for students and tutors
         if (person.getPersonType() == PersonType.STUDENT) {

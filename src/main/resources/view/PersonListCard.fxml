@@ -5,6 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.FlowPane?>
 
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" styleClass="modern-card" spacing="20">
   <padding>
@@ -24,6 +25,7 @@
     </HBox>
     <Label fx:id="email" styleClass="card-email" text="\$email" />
     <Label fx:id="role" styleClass="role-label" />
+    <FlowPane fx:id="tags" styleClass="tags-flow" hgap="5" vgap="5" />
     <Label fx:id="enrolledClasses" styleClass="card-email" text="\$enrolledClasses" />
   </VBox>
 

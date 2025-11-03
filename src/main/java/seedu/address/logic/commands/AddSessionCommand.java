@@ -39,6 +39,7 @@ public class AddSessionCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New session added to class %s: %s";
     public static final String MESSAGE_CLASS_NOT_EXIST = "This class does not exist in the address book";
     public static final String MESSAGE_DUPLICATE_SESSION = "This session name already exists for this class";
+    public static final String MESSAGE_DUPLICATE_DATETIME = "A session already exists at this date/time for this class";
 
     private static final Logger LOGGER = LogsCenter.getLogger(AddSessionCommand.class);
 
@@ -94,6 +95,14 @@ public class AddSessionCommand extends Command {
         if (tuitionClass.hasSessionName(sessionName)) {
             LOGGER.warning("Duplicate session name: " + sessionName + " in class: " + className);
             throw new CommandException(MESSAGE_DUPLICATE_SESSION);
+        }
+
+        // Check if a session already exists at this datetime
+        boolean hasConflictingSession = tuitionClass.getAllSessions().stream()
+                .anyMatch(session -> session.getDateTime().equals(dateTime));
+        if (hasConflictingSession) {
+            LOGGER.warning("Duplicate datetime: " + dateTime + " in class: " + className);
+            throw new CommandException(MESSAGE_DUPLICATE_DATETIME);
         }
 
         // Add session to the class

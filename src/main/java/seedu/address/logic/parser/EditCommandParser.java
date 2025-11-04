@@ -37,8 +37,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         String cleanedArgs = args.replace("--force", "").trim();
 
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(cleanedArgs, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_TAG, PREFIX_PERSON_TYPE);
+            ArgumentTokenizer.tokenize(cleanedArgs, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+                    PREFIX_TAG, PREFIX_PERSON_TYPE);
 
         Index index;
 
@@ -67,7 +67,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         if (argMultimap.getValue(PREFIX_PERSON_TYPE).isPresent()) {
             editPersonDescriptor.setPersonType(ParserUtil.parsePersonType(
-                    argMultimap.getValue(PREFIX_PERSON_TYPE).get()));
+                argMultimap.getValue(PREFIX_PERSON_TYPE).get()));
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 

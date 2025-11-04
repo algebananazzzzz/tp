@@ -43,15 +43,15 @@ public class EditCommand extends Command {
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Edits the details of the person identified "
-            + "by the index number used in the displayed person list. "
-            + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) " + "["
-            + PREFIX_NAME + "NAME] " + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] " + "[" + PREFIX_ADDRESS
-            + "ADDRESS] " + "[" + PREFIX_PERSON_TYPE + "ROLE] " + "[" + PREFIX_TAG + "TAG]...\n" + "Example: "
-            + COMMAND_WORD + " 1 " + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+                    + ": Edits the details of the person identified "
+                    + "by the index number used in the displayed person list. "
+                    + "Existing values will be overwritten by the input values.\n"
+                    + "Parameters: INDEX (must be a positive integer) " + "["
+                    + PREFIX_NAME + "NAME] " + "[" + PREFIX_PHONE + "PHONE] "
+                    + "[" + PREFIX_EMAIL + "EMAIL] " + "[" + PREFIX_ADDRESS
+                    + "ADDRESS] " + "[" + PREFIX_PERSON_TYPE + "ROLE] " + "[" + PREFIX_TAG + "TAG]...\n" + "Example: "
+                    + COMMAND_WORD + " 1 " + PREFIX_PHONE + "91234567 "
+                    + PREFIX_EMAIL + "johndoe@example.com";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -97,16 +97,16 @@ public class EditCommand extends Command {
         if (index.getZeroBased() >= lastShownList.size()) {
             LOGGER.warning("Invalid person index: " + index.getOneBased() + ", list size: " + lastShownList.size());
             throw new CommandException(
-                    Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                            Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
         LOGGER.info("Editing person: " + personToEdit.getName());
         Person editedPerson = createEditedPerson(personToEdit,
-                editPersonDescriptor);
+                        editPersonDescriptor);
 
         if (!personToEdit.isSamePerson(editedPerson)
-                && model.hasPerson(editedPerson)) {
+                        && model.hasPerson(editedPerson)) {
             LOGGER.warning("Attempted to edit person to duplicate: " + editedPerson.getName());
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
@@ -128,7 +128,7 @@ public class EditCommand extends Command {
         LOGGER.info("Successfully edited person: " + personToEdit.getName() + " -> " + editedPerson.getName());
 
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS,
-                Messages.format(editedPerson)));
+                        Messages.format(editedPerson)));
     }
 
     private String checkDataLoss(Person person, PersonType newType) {
@@ -170,24 +170,24 @@ public class EditCommand extends Command {
      * {@code personToEdit} edited with {@code editPersonDescriptor}.
      */
     private static Person createEditedPerson(Person personToEdit,
-                                             EditPersonDescriptor editPersonDescriptor) {
+                    EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName()
-                .orElse(personToEdit.getName());
+                        .orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone()
-                .orElse(personToEdit.getPhone());
+                        .orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail()
-                .orElse(personToEdit.getEmail());
+                        .orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress()
-                .orElse(personToEdit.getAddress());
+                        .orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags()
-                .orElse(personToEdit.getTags());
+                        .orElse(personToEdit.getTags());
         PersonType role = editPersonDescriptor.getPersonType()
-                .orElse(personToEdit.getPersonType());
+                        .orElse(personToEdit.getPersonType());
 
         return Person.newPerson(updatedName, updatedPhone, updatedEmail,
-                updatedAddress, updatedTags, role);
+                        updatedAddress, updatedTags, role);
     }
 
     @Override
@@ -203,14 +203,14 @@ public class EditCommand extends Command {
 
         EditCommand otherEditCommand = (EditCommand) other;
         return index.equals(otherEditCommand.index) && editPersonDescriptor
-                .equals(otherEditCommand.editPersonDescriptor);
+                        .equals(otherEditCommand.editPersonDescriptor);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this).add("index", index)
-                .add("editPersonDescriptor", editPersonDescriptor)
-                .toString();
+                        .add("editPersonDescriptor", editPersonDescriptor)
+                        .toString();
     }
 
     /**
@@ -246,7 +246,7 @@ public class EditCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(name, phone, email, address,
-                    tags, role);
+                            tags, role);
         }
 
         public void setName(Name name) {
@@ -296,8 +296,8 @@ public class EditCommand extends Command {
          */
         public Optional<Set<Tag>> getTags() {
             return (tags != null)
-                    ? Optional.of(Collections.unmodifiableSet(tags))
-                    : Optional.empty();
+                            ? Optional.of(Collections.unmodifiableSet(tags))
+                            : Optional.empty();
         }
 
         public void setPersonType(PersonType role) {
@@ -321,24 +321,24 @@ public class EditCommand extends Command {
 
             EditPersonDescriptor otherEditPersonDescriptor = (EditPersonDescriptor) other;
             return Objects.equals(name, otherEditPersonDescriptor.name)
-                    && Objects.equals(phone,
-                    otherEditPersonDescriptor.phone)
-                    && Objects.equals(email,
-                    otherEditPersonDescriptor.email)
-                    && Objects.equals(address,
-                    otherEditPersonDescriptor.address)
-                    && Objects.equals(tags,
-                    otherEditPersonDescriptor.tags)
-                    && Objects.equals(role,
-                    otherEditPersonDescriptor.role);
+                            && Objects.equals(phone,
+                                            otherEditPersonDescriptor.phone)
+                            && Objects.equals(email,
+                                            otherEditPersonDescriptor.email)
+                            && Objects.equals(address,
+                                            otherEditPersonDescriptor.address)
+                            && Objects.equals(tags,
+                                            otherEditPersonDescriptor.tags)
+                            && Objects.equals(role,
+                                            otherEditPersonDescriptor.role);
         }
 
         @Override
         public String toString() {
             return new ToStringBuilder(this).add("name", name)
-                    .add("phone", phone).add("email", email)
-                    .add("address", address).add("role", role).add("tags", tags)
-                    .toString();
+                            .add("phone", phone).add("email", email)
+                            .add("address", address).add("role", role).add("tags", tags)
+                            .toString();
         }
     }
 }

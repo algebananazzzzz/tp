@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -62,10 +64,10 @@ public class EditCommandTest {
 
         PersonBuilder personInList = new PersonBuilder(lastPerson);
         Person editedPerson = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                        .withTags(VALID_TAG_HUSBAND).build();
+                .withTags(VALID_TAG_HUSBAND).build();
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                        .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
+                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
         EditCommand editCommand = new EditCommand(indexLastPerson, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
@@ -96,7 +98,7 @@ public class EditCommandTest {
         // Edit the person's phone instead of name to keep them in the filtered list
         Person editedPerson = new PersonBuilder(personInFilteredList).withPhone(VALID_PHONE_BOB).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON,
-                        new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB).build());
+                new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB).build());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
 
@@ -123,7 +125,7 @@ public class EditCommandTest {
         // edit person in filtered list into a duplicate in address book
         Person personInList = model.getAddressBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON,
-                        new EditPersonDescriptorBuilder(personInList).build());
+                new EditPersonDescriptorBuilder(personInList).build());
 
         assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
     }
@@ -149,7 +151,7 @@ public class EditCommandTest {
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
         EditCommand editCommand = new EditCommand(outOfBoundIndex,
-                        new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -185,7 +187,7 @@ public class EditCommandTest {
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
         EditCommand editCommand = new EditCommand(index, editPersonDescriptor);
         String expected = EditCommand.class.getCanonicalName() + "{index=" + index + ", editPersonDescriptor="
-                        + editPersonDescriptor + "}";
+                + editPersonDescriptor + "}";
         assertEquals(expected, editCommand.toString());
     }
 
@@ -256,7 +258,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_changeStudentToTutor_removesRelationships() throws Exception {
+    public void execute_changeStudentToTutor_warnsAboutDataLoss() throws Exception {
         Model modelWithRelationships = new ModelManager(new AddressBook(), new UserPrefs());
 
         // Create parent and student
@@ -278,13 +280,12 @@ public class EditCommandTest {
                 .withPersonType(PersonType.TUTOR).build();
         EditCommand editCommand = new EditCommand(Index.fromOneBased(2), descriptor);
 
-        editCommand.execute(modelWithRelationships);
+        // Should throw exception warning about data loss
+        assertThrows(CommandException.class, () -> editCommand.execute(modelWithRelationships));
 
-        // Get parent from model (it should still be a Parent)
+        // Verify relationships are still intact (not deleted since conversion was prevented)
         Person parentFromModel = modelWithRelationships.getFilteredPersonList().get(0);
-
-        // Verify parent no longer has student as child
-        assertEquals(0, ((Parent) parentFromModel).getChildren().size());
+        assertEquals(1, ((Parent) parentFromModel).getChildren().size());
     }
 
     @Test
@@ -312,7 +313,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_changeParentToTutor_removesRelationships() throws Exception {
+    public void execute_changeParentToTutor_warnsAboutDataLoss() throws Exception {
         Model modelWithRelationships = new ModelManager(new AddressBook(), new UserPrefs());
 
         // Create parent and student
@@ -334,13 +335,12 @@ public class EditCommandTest {
                 .withPersonType(PersonType.TUTOR).build();
         EditCommand editCommand = new EditCommand(Index.fromOneBased(1), descriptor);
 
-        editCommand.execute(modelWithRelationships);
+        // Should throw exception warning about data loss
+        assertThrows(CommandException.class, () -> editCommand.execute(modelWithRelationships));
 
-        // Get student from model (it should still be a Student)
+        // Verify relationships are still intact (not deleted since conversion was prevented)
         Person studentFromModel = modelWithRelationships.getFilteredPersonList().get(1);
-
-        // Verify student no longer has parent
-        assertEquals(0, ((Student) studentFromModel).getParents().size());
+        assertEquals(1, ((Student) studentFromModel).getParents().size());
     }
 
     @Test
@@ -404,7 +404,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_changeStudentToParent_removesTuitionClassRelationships() throws Exception {
+    public void execute_changeStudentToParent_warnsAboutDataLoss() throws Exception {
         Model modelWithRelationships = new ModelManager(new AddressBook(), new UserPrefs());
 
         // Create student and tuition class
@@ -423,14 +423,15 @@ public class EditCommandTest {
                 .withPersonType(PersonType.PARENT).build();
         EditCommand editCommand = new EditCommand(Index.fromOneBased(1), descriptor);
 
-        editCommand.execute(modelWithRelationships);
+        // Should throw exception warning about data loss
+        assertThrows(CommandException.class, () -> editCommand.execute(modelWithRelationships));
 
-        // Verify tuition class no longer has student
-        assertEquals(0, tuitionClass.getStudents().size());
+        // Verify student is still in class (conversion was prevented)
+        assertEquals(1, tuitionClass.getStudents().size());
     }
 
     @Test
-    public void execute_changeTutorToStudent_removesTuitionClassRelationships() throws Exception {
+    public void execute_changeTutorToStudent_warnsAboutDataLoss() throws Exception {
         Model modelWithRelationships = new ModelManager(new AddressBook(), new UserPrefs());
 
         // Create tutor and tuition class
@@ -449,10 +450,9 @@ public class EditCommandTest {
                 .withPersonType(PersonType.STUDENT).build();
         EditCommand editCommand = new EditCommand(Index.fromOneBased(1), descriptor);
 
-        editCommand.execute(modelWithRelationships);
+        assertThrows(CommandException.class, () -> editCommand.execute(modelWithRelationships));
 
-        // Verify tuition class no longer has tutor
-        assertFalse(tuitionClass.isAssignedToTutor());
+        assertTrue(tuitionClass.isAssignedToTutor());
     }
 
 }
